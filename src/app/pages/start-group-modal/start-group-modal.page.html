@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="group">
+      <ion-button (click)="startGroup()" [disabled]="groupName === ''">
+        Start Group
+      </ion-button>
+    </ion-buttons>
+    <ion-title>New Chat</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"> Cancel </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-button expand="full" (click)="group = !group" fill="clear">
+    {{group? 'Direct chat' : 'Group chat'}}
+  </ion-button>
+  <ion-item *ngIf="group">
+    <ion-label position="stacked">Group Name</ion-label>
+    <ion-input [(ngModel)]="groupName" placeholder="Friends group"></ion-input>
+  </ion-item>
+  <ion-list>
+    <ion-list-header> Available Users </ion-list-header>
+    <ion-item
+      *ngFor="let user of users"
+      [button]="!group"
+      (click)="startChat(user)"
+    >
+      <ion-label>{{user.email}}</ion-label>
+      <ion-checkbox
+        slot="end"
+        *ngIf="group"
+        [(ngModel)]="user.selected"
+      ></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
